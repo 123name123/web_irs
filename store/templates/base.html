@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>{{ title }}</title>
+</head>
+<nav>
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}</p>
+        <p><a href={%  url 'cart' %}>Cart</a></p>
+        <p><a href={%  url 'catalog' %}>Product catalog</a></p>
+        <p><a href="{% url 'logout' %}">Log out</a></p>
+    {% else %}
+        <a href="{% url 'register' %}">Register</a>
+        <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+</nav>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>
