@@ -17,6 +17,7 @@ class DBProduct:
             connection = psycopg2.connect(
                 host=host,
                 user=user,
+                port=5430,
                 password=password,
                 database=db
             )
@@ -25,13 +26,17 @@ class DBProduct:
 
         return connection
 
-    def get_product_by_name(self, product_name: str) -> list:
+    def get_products_by_name(self, product_name: str, page: int, offset=50) -> list:
         result = []
-        with self.connection.cursor() as cursor:
-            cursor.execute(
-                f"SELECT p.title, p.price, c.name as category, p.id from product as p "
-                f"left outer join category c on c.id = p.app_category_id WHERE p.title LIKE '%{product_name}%';")
-            result = cursor.fetchall()
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(
+                    f"SELECT p.title, p.price, c.name as category, p.id, p.images from product as p "
+                    f"left outer join category c on c.id = p.app_category_id WHERE p.title LIKE '%{product_name}%' "
+                    f"LIMIT {offset + 1} OFFSET {(page - 1) * offset};")
+                result = cursor.fetchall()
+        except Exception as ex:
+            print(ex)
 
         return result
 

@@ -3,19 +3,25 @@
 <html lang="ru">
 <head>
     <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
 </head>
-<nav>
-    {% if user.is_authenticated %}
-        <p>Hello, {{ user.username }}</p>
-        <p><a href={%  url 'cart' %}>Cart</a></p>
-        <p><a href={%  url 'catalog' %}>Product catalog</a></p>
-        <p><a href="{% url 'logout' %}">Log out</a></p>
-    {% else %}
-        <a href="{% url 'register' %}">Register</a>
-        <a href="{% url 'login' %}">Log in</a>
-    {% endif %}
-</nav>
 <body>
+<header>
+    <nav>
+        <ul>
+            <li class="main"><a href="/">Главная страница</a></li>
+            <li><a href={% url 'catalog' %}>Поиск товаров</a></li>
+            {% if user.is_authenticated %}
+                <li><a href={% url 'cart' %}>Корзина</a></li>
+                <li><a href={% url 'profile' %}>Профиль</a></li>
+                <li><a href={% url 'logout' %}>Выход</a></li>
+            {% else %}
+                <li><a href={% url 'login' %}>Вход</a></li>
+                <li><a href={% url 'register' %}>Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
 {% block content %}
 {% endblock %}
 </body>

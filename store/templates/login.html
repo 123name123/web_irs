@@ -1,10 +1,18 @@
-<h3>Вход</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Войти</button>
-    {% for message in messages %}
-        <p id="messages"> {{ message }}</p>
-    {% endfor %}
-    <a href="{% url 'register' %}">Ещё нет аккаунта?</a>
-</form>
+<head>
+    <title>Вход</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/login.css">
+</head>
+<body>
+<div class="login-container">
+    <h3 class="login-header">Вход в аккаунт</h3>
+    <form class="login-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="login-btn" type="submit">Войти</button>
+        {% for message in messages %}
+            <p class="login-message">{{ message }}</p>
+        {% endfor %}
+    </form>
+    <p class="signup-link">Еще нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+</div>
+</body>

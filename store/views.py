@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
-from .forms import RegisterForm
+from .forms import RegisterForm, ProductSearchForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
@@ -60,22 +60,51 @@ def logout_page(request):
     return redirect("/")
 
 
+def profile_page(request):
+    return redirect("/")
+
+
 def index(request):
     context = {'user': request.user, 'title': 'StoreName'}
     return render(request, 'base.html', context)
 
 
 def product_catalog(request):
+    form = ProductSearchForm(request.GET)
+
+    page_number = int(request.GET.get('page', 1))
+    products = list()
+    name = ""
+    product_per_page = 25
+    next_page_number = 0
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        if name != "":
+            products = db_use.get_products_by_name(name, page_number, product_per_page)
+        if len(products) > 25:
+            next_page_number = page_number + 1
+
+    context = {'name': name,
+               'products': products,
+               'form': form,
+               'page': page_number,
+               'prev_page': page_number - 1,
+               'next_page': next_page_number}
+    return render(request=request, template_name="product_catalog.html", context=context)
+
+    """print(request.POST)
+    name = request.POST["product_name"]
     if request.method == "POST":
-        name = request.POST["product_name"]
         products = []
+        page = request.GET.get('page')
+        print(page)
         if name != '':
-            products = db_use.get_product_by_name(name)
+            products = db_use.get_products_by_name(name, page)
         context = {'name': name, 'products': products}
         return render(request=request, template_name="product_catalog.html", context=context)
 
     context = {'name': ''}
-    return render(request=request, template_name="product_catalog.html", context=context)
+    return render(request=request, template_name="product_catalog.html", context=context)"""
 
 
 def product_profile(request, product_id):

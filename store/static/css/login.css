@@ -1,0 +1,64 @@
+/* Контейнер для всей формы входа */
+.login-container {
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Заголовок формы входа */
+.login-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Форма входа */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Поле ввода логина и пароля */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Кнопка входа */
+.login-btn {
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Сообщения об ошибках */
+.login-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Ссылка на регистрацию */
+.signup-link {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.signup-link a {
+  color: #333;
+  text-decoration: underline;
+}

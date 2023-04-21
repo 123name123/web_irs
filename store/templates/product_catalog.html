@@ -1,28 +1,42 @@
-<body>
-<div style="text-align: center">
-    <form method="post" action=''>
-        {% csrf_token %}
-        <div>
-            Search product
-            <input type="text" name="product_name" value="{{ name }}">
-            <input type="submit" value="find">
-        </div>
-    </form>
-</div>
-{% if name != '' %}
-    <table width="95%">
-        <tr>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Category</th>
-        </tr>
-        {% for product in products %}
+{% extends "base.html" %}
+{% block content %}
+    <div style="text-align: center">
+        <!--<form method="post" action=''>
+            {% csrf_token %}
+            <div>
+                Search product
+                <input type="text" name="product_name" value="{{ name }}">
+                <input type="submit" value="find">
+            </div>
+        </form>--->
+        <form method="get">
+            {{ form.as_p }}
+            <button type="submit">Найти</button>
+        </form>
+    </div>
+    {% if name != '' %}
+        <table width="95%">
             <tr>
-                <th><a href={% url 'product' product_id=product.3 %}>{{ product.0 }}</a></th>
-                <th>{{ product.1 }}</th>
-                <th>{{ product.2 }}</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Category</th>
             </tr>
-        {% endfor %}
-    </table>
-{% endif %}
-</body>
+            {% for product in products %}
+                <tr>
+                    <th><a href={% url 'product' product_id=product.3 %}>{{ product.0 }}</a></th>
+                    <th>{{ product.1 }}</th>
+                    <th>{{ product.2 }}</th>
+                </tr>
+            {% endfor %}
+        </table>
+        <div>
+            {% if prev_page %}
+                <a href="?page={{ prev_page }}&name={{ name }}"><<</a>
+            {% endif %}
+            <div>{{ page }}</div>
+            {% if next_page %}
+                <a href="?page={{ next_page }}&name={{ name }}">>></a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}
